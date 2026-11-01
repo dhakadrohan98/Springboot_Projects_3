@@ -1,0 +1,59 @@
+### Compiled Class Files & Build Directories
+target/
+build/
+bin/
+*.class
+
+### Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+### Log Files
+*.log
+
+### Maven Wrapper
+.mvn/wrapper/maven-wrapper.jar
+
+### Gradle Wrapper
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+### IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+### Eclipse IDE
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+### VS Code
+.vscode/
+
+### OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+### Local Environment / Sensitive Overrides
+application-local.properties
+application-local.yml
+application-local.yaml
+*.env
