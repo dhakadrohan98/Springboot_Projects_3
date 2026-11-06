@@ -10,12 +10,12 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
+//import java.util.concurrent.CompletableFuture;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private KafkaTemplate<String, ProductCreatedEvent> kafkaTemplate;
 
     public ProductServiceImpl(KafkaTemplate kafkaTemplate) {
@@ -23,28 +23,40 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public String createProduct(CreateProductRestModel createProductRestModel) {
+    public String createProduct(CreateProductRestModel createProductRestModel) throws Exception {
 
         String productId = UUID.randomUUID().toString();
         //TODO: persist the product data into database
         ProductCreatedEvent productCreatedEvent = new ProductCreatedEvent(productId, createProductRestModel.getTitle(),
                 createProductRestModel.getPrice(), createProductRestModel.getQuantity());
-        logger.info("****publishing message to kafka topic");
+        LOGGER.info("****Before publishing message to kafka topic");
 
         //publish the event data as topic-name, key, value {key:value} pair
-        CompletableFuture<SendResult<String, ProductCreatedEvent>> future =
-                kafkaTemplate.send("product-created-events-topic", productId, productCreatedEvent);
+        //publishing productCreateEvent synchronously
+        SendResult<String, ProductCreatedEvent> result =
+                kafkaTemplate.send("product-created-events-topic", productId, productCreatedEvent).get();
+
+        /*CompletableFuture<SendResult<String, ProductCreatedEvent>> future =
+                kafkaTemplate.send("product-created-events-topic", productId, productCreatedEvent);*/
+
         //for asynchronous call, if publish event fails then also it will receive the result not the excpetion
-        future.whenComplete((result, exception) -> {
+        /*future.whenComplete((result, exception) -> {
             if(exception != null) {
                 logger.error("*****Failed to send message: " + exception.getMessage());
             } else {
                 logger.info("*****Message sent successfully: " + result.getRecordMetadata());
             }
-        });
+        });*/
         // use join() method to block the current thread (to stop any other task which are later after future.whenComplete(result, exception) method call)
         //future.join();
-        logger.info("*****returning product id");
+
+        //using SendResult<String, ProductCreatedEvent> object we can read metadata from a result of published event
+        LOGGER.info("Partition- " + result.getRecordMetadata().partition());
+        LOGGER.info("Topic- " + result.getRecordMetadata().topic());
+        LOGGER.info("Offset- " + result.getRecordMetadata().offset());
+
+        
+        LOGGER.info("*****Returning product id");
         return productId;
     }
 }
