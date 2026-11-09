@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
         //publish the event data as topic-name, key, value {key:value} pair
         //publishing productCreateEvent synchronously
         SendResult<String, ProductCreatedEvent> result =
-                kafkaTemplate.send("product-created-events-topic", productId, productCreatedEvent).get();
+                kafkaTemplate.send("insync-topic", productId, productCreatedEvent).get();
 
         /*CompletableFuture<SendResult<String, ProductCreatedEvent>> future =
                 kafkaTemplate.send("product-created-events-topic", productId, productCreatedEvent);*/
