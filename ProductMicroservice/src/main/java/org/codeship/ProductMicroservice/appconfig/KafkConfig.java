@@ -2,7 +2,7 @@ package org.codeship.ProductMicroservice.appconfig;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.codeship.ProductMicroservice.event.ProductCreatedEvent;
+import org.codeship.core.event.ProductCreatedEvent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

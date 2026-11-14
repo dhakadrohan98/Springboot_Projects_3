@@ -1,4 +1,4 @@
-package org.codeship.ProductMicroservice.event;
+package org.codeship.core.event;
 
 import java.math.BigDecimal;
 
