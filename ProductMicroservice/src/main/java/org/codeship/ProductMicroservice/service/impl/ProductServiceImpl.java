@@ -1,8 +1,8 @@
 package org.codeship.ProductMicroservice.service.impl;
 
 import org.codeship.ProductMicroservice.dto.CreateProductRestModel;
-import org.codeship.ProductMicroservice.event.ProductCreatedEvent;
 import org.codeship.ProductMicroservice.service.ProductService;
+import org.codeship.core.event.ProductCreatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
